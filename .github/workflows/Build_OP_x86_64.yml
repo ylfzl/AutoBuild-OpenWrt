@@ -60,18 +60,12 @@ jobs:
 
     - name: Clone source code
       env: 
-        REPO_URL: https://github.com/ylfzl/lede
+        REPO_URL: https://github.com/coolsnowwolf/lede
         REPO_BRANCH: master
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
         echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
-    - name: Update & Install feeds
-      working-directory: ./openwrt
-      run: |
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        ./scripts/feeds install -a
 
     - name: Import external feeds - passwall
       working-directory: ./openwrt
@@ -80,6 +74,21 @@ jobs:
         git clone https://github.com/kenzok8/openwrt-packages package/kenzo
         git clone https://github.com/kenzok8/small package/small
         git clone https://github.com/sirpdboy/sirpdboy-package package/opentopd
+        
+    - name: Update & Install feeds
+      working-directory: ./openwrt
+      run: |
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        ./scripts/feeds install -a
+
+    #- name: Import external feeds - passwall
+    #  working-directory: ./openwrt
+    #  run: |
+    #    git clone https://github.com/xiaorouji/openwrt-passwall.git package/lienol
+    #    git clone https://github.com/kenzok8/openwrt-packages package/kenzo
+    #    git clone https://github.com/kenzok8/small package/small
+    #    git clone https://github.com/sirpdboy/sirpdboy-package package/opentopd
 
     #- name: Import external feeds - JerryKuKu Argon
     #  working-directory: ./openwrt
